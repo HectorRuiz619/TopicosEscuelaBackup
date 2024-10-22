@@ -172,3 +172,4 @@ Public Class frmGenerarHorario
     End Sub
 
 End Class
+'se tiene que agregar a BD horario
