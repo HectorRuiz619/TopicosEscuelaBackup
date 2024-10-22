@@ -173,3 +173,4 @@ Public Class frmGenerarHorario
 
 End Class
 'se tiene que agregar a BD horario
+'se prepara el dgv con la BD para agregar
