@@ -163,14 +163,136 @@ Public Class frmGenerarHorario
     Private Sub cmbSemestre_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSemestre.SelectedIndexChanged
         CargarAlumnosPorSeleccion()
         CargarMateriasPorSeleccion()
+        CargarPeriodo() ' Llamar a cargar periodo aquí
     End Sub
 
     ' --- Evento para cargar materias y alumnos cuando se selecciona un grupo ---
     Private Sub cmbGrupo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbGrupo.SelectedIndexChanged
         CargarAlumnosPorSeleccion()
         CargarMateriasPorSeleccion()
+        CargarPeriodo() ' Llamar a cargar periodo aquí también
+    End Sub
+
+    ' --- Método para cargar el periodo ---
+    Private Sub CargarPeriodo()
+        Dim connBD As New ConnexionBD()
+        Dim conn As MySqlConnection = connBD.GetConnection()
+
+        If conn Is Nothing Then
+            MessageBox.Show("No se pudo establecer la conexión.")
+            Exit Sub
+        End If
+
+        Try
+            ' Obtener el idOferta de la primera materia seleccionada
+            If dgvMaterias.Rows.Count > 0 Then
+                Dim idOferta As Integer = CInt(dgvMaterias.Rows(0).Cells("ID Oferta").Value)
+
+                ' Consulta para obtener el periodo
+                Dim queryPeriodo As String = "SELECT p.Periodo FROM oferta o " &
+                                             "JOIN periodo p ON o.idPeriodo = p.idPeriodo " &
+                                             "WHERE o.idOferta = @idOferta LIMIT 1"
+
+                Dim cmdPeriodo As New MySqlCommand(queryPeriodo, conn)
+                cmdPeriodo.Parameters.AddWithValue("@idOferta", idOferta)
+
+                ' Ejecutar la consulta y obtener el resultado
+                Dim periodo As String = cmdPeriodo.ExecuteScalar()?.ToString()
+
+                ' Mostrar el periodo en txtPeriodo
+                If Not String.IsNullOrEmpty(periodo) Then
+                    txtPeriodo.Text = periodo
+                Else
+                    txtPeriodo.Text = "No se encontró el período"
+                End If
+            Else
+                txtPeriodo.Text = "No hay materias seleccionadas"
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar el período: " & ex.Message)
+        Finally
+            connBD.CloseConnection(conn)
+        End Try
+    End Sub
+
+    ' Método para guardar el horario
+    Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        Dim connBD As New ConnexionBD()
+        Dim conn As MySqlConnection = connBD.GetConnection()
+
+        If conn Is Nothing Then
+            MessageBox.Show("No se pudo establecer la conexión.")
+            Exit Sub
+        End If
+
+        Try
+            ' Validar si hay alumnos y materias seleccionados
+            If dgvAlumnos.Rows.Count = 0 Then
+                MessageBox.Show("No hay alumnos seleccionados.")
+                Exit Sub
+            End If
+
+            If dgvMaterias.Rows.Count = 0 Then
+                MessageBox.Show("No hay materias seleccionadas.")
+                Exit Sub
+            End If
+
+            ' Recorremos las filas de alumnos para obtener sus datos
+            For Each filaAlumno As DataGridViewRow In dgvAlumnos.Rows
+                ' Verificamos si la fila no es nueva (es decir, ya existe)
+                If filaAlumno.IsNewRow Then
+                    Continue For
+                End If
+
+                ' Usamos el índice de la columna para obtener el número de control
+                Dim noControl As String = filaAlumno.Cells(0).Value?.ToString()
+
+                If String.IsNullOrEmpty(noControl) Then
+                    MessageBox.Show("No se pudo obtener el número de control del alumno.")
+                    Exit Sub
+                End If
+
+                ' Obtener el semestre seleccionado
+                Dim semestreSeleccionado As Integer = CInt(cmbSemestre.SelectedItem)
+
+                ' Asignar Promedio a 0, ya que no se obtiene de la tabla alumno
+                Dim promedio As Decimal = 0
+
+                ' Recorremos las filas de materias para obtener las asignaturas del alumno
+                For Each filaMateria As DataGridViewRow In dgvMaterias.Rows
+                    ' Verificamos si la fila no es nueva (es decir, ya existe)
+                    If filaMateria.IsNewRow Then
+                        Continue For
+                    End If
+
+                    Dim idOferta As Integer = CInt(filaMateria.Cells("ID Oferta").Value)
+
+                    If idOferta = -1 Then
+                        MessageBox.Show("No se pudo obtener el ID de la oferta.")
+                        Exit Sub
+                    End If
+
+                    ' Insertamos un nuevo registro en la tabla horario
+                    Dim queryInsert As String = "INSERT INTO horario (Semestre, Opcion, Promedio, idOferta, noControl) " &
+                                            "VALUES (@semestre, @opcion, @promedio, @idOferta, @noControl)"
+
+                    Dim cmdInsert As New MySqlCommand(queryInsert, conn)
+                    cmdInsert.Parameters.AddWithValue("@semestre", semestreSeleccionado) ' Semestre seleccionado
+                    cmdInsert.Parameters.AddWithValue("@opcion", "Regular") ' Puedes cambiar este valor si es necesario
+                    cmdInsert.Parameters.AddWithValue("@promedio", promedio) ' Promedio asignado a 0
+                    cmdInsert.Parameters.AddWithValue("@idOferta", idOferta) ' ID de la oferta
+                    cmdInsert.Parameters.AddWithValue("@noControl", noControl) ' NoControl del alumno
+
+                    cmdInsert.ExecuteNonQuery()
+                Next
+            Next
+
+            MessageBox.Show("Horario guardado exitosamente.")
+        Catch ex As Exception
+            MessageBox.Show("Error al guardar el horario: " & ex.Message)
+        Finally
+            connBD.CloseConnection(conn)
+        End Try
     End Sub
 
 End Class
-'se tiene que agregar a BD horario
-'se prepara el dgv con la BD para agregar

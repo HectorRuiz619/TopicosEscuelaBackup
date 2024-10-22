@@ -51,7 +51,7 @@ Partial Class frmGenerarHorario
         '
         Me.Carrera.AutoSize = True
         Me.Carrera.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Carrera.Location = New System.Drawing.Point(117, 100)
+        Me.Carrera.Location = New System.Drawing.Point(83, 72)
         Me.Carrera.Name = "Carrera"
         Me.Carrera.Size = New System.Drawing.Size(78, 25)
         Me.Carrera.TabIndex = 1
@@ -61,17 +61,17 @@ Partial Class frmGenerarHorario
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(117, 128)
+        Me.Label2.Location = New System.Drawing.Point(83, 109)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 25)
+        Me.Label2.Size = New System.Drawing.Size(96, 25)
         Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Grado"
+        Me.Label2.Text = "Semestre"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(117, 156)
+        Me.Label3.Location = New System.Drawing.Point(83, 137)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(66, 25)
         Me.Label3.TabIndex = 5
@@ -81,7 +81,7 @@ Partial Class frmGenerarHorario
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(624, 9)
+        Me.Label4.Location = New System.Drawing.Point(183, 12)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(79, 25)
         Me.Label4.TabIndex = 7
@@ -90,7 +90,7 @@ Partial Class frmGenerarHorario
         'cmbClvCarrera
         '
         Me.cmbClvCarrera.FormattingEnabled = True
-        Me.cmbClvCarrera.Location = New System.Drawing.Point(218, 100)
+        Me.cmbClvCarrera.Location = New System.Drawing.Point(185, 73)
         Me.cmbClvCarrera.Name = "cmbClvCarrera"
         Me.cmbClvCarrera.Size = New System.Drawing.Size(168, 24)
         Me.cmbClvCarrera.TabIndex = 8
@@ -98,7 +98,7 @@ Partial Class frmGenerarHorario
         'cmbSemestre
         '
         Me.cmbSemestre.FormattingEnabled = True
-        Me.cmbSemestre.Location = New System.Drawing.Point(218, 138)
+        Me.cmbSemestre.Location = New System.Drawing.Point(185, 109)
         Me.cmbSemestre.Name = "cmbSemestre"
         Me.cmbSemestre.Size = New System.Drawing.Size(168, 24)
         Me.cmbSemestre.TabIndex = 9
@@ -106,7 +106,7 @@ Partial Class frmGenerarHorario
         'cmbGrupo
         '
         Me.cmbGrupo.FormattingEnabled = True
-        Me.cmbGrupo.Location = New System.Drawing.Point(218, 165)
+        Me.cmbGrupo.Location = New System.Drawing.Point(185, 141)
         Me.cmbGrupo.Name = "cmbGrupo"
         Me.cmbGrupo.Size = New System.Drawing.Size(168, 24)
         Me.cmbGrupo.TabIndex = 10
@@ -157,14 +157,14 @@ Partial Class frmGenerarHorario
         '
         'txtPeriodo
         '
-        Me.txtPeriodo.Location = New System.Drawing.Point(730, 9)
+        Me.txtPeriodo.Location = New System.Drawing.Point(289, 12)
         Me.txtPeriodo.Name = "txtPeriodo"
         Me.txtPeriodo.Size = New System.Drawing.Size(168, 22)
         Me.txtPeriodo.TabIndex = 19
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(492, 83)
+        Me.btnGuardar.Location = New System.Drawing.Point(406, 56)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(108, 41)
         Me.btnGuardar.TabIndex = 13
@@ -173,7 +173,7 @@ Partial Class frmGenerarHorario
         '
         'btnCancelar
         '
-        Me.btnCancelar.Location = New System.Drawing.Point(766, 114)
+        Me.btnCancelar.Location = New System.Drawing.Point(406, 103)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(108, 40)
         Me.btnCancelar.TabIndex = 14
